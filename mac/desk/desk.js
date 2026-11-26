@@ -138,7 +138,9 @@ function updateFeedback(message, kind = '') {
 function updateTimer() {
   if (state.fieldLimit) {
     const remaining = Math.ceil((state.fieldLimit - state.fieldTime) * (relaxed ? 2 : 1));
-    get('field-cycle').textContent = 'Pass ' + (state.fieldPasses + 1) + ' · ' + remaining + 's until the carriage returns';
+    const label = 'Pass ' + (state.fieldPasses + 1) + ' · ' + remaining + 's until the carriage returns';
+    const timer = get('field-cycle');
+    if (timer.textContent !== label) timer.textContent = label;
   }
 }
 function paint() {
@@ -192,6 +194,7 @@ function begin() {
   resetInput();
   paint();
   input.focus({ preventScroll: true });
+  runFieldClock();
 }
 function pause() {
   if (mode !== 'typing') return;
@@ -272,6 +275,7 @@ function takeKey(key) {
   } else if (result === 'erase' && !state.typed) {
     speak(get('input-description').textContent);
   }
+  runFieldClock();
   persist();
 }
 
@@ -428,16 +432,28 @@ window.addEventListener('storage', event => {
   }
 });
 motion.addEventListener('change', () => machine.render(visualProps()));
-let lastTick = performance.now();
-setInterval(() => {
-  const now = performance.now();
-  const dt = Math.min(.2, (now - lastTick) / 1000);
-  lastTick = now;
-  if (mode !== 'typing' || document.activeElement !== input || document.hidden || !state.fieldLimit || !state.fieldStarted) return;
-  tick(state, dt, relaxed);
-  updateTimer();
-  if (!motion.matches) machine.render(visualProps());
-}, 65);
+let clockPending = false;
+function runFieldClock() {
+  if (clockPending || !state.fieldLimit || !state.fieldStarted) return;
+  let last = performance.now();
+  function advance(now) {
+    if (mode !== 'typing' || document.activeElement !== input || document.hidden || !state.fieldLimit || !state.fieldStarted) {
+      clockPending = false;
+      return;
+    }
+    tick(state, Math.min(.3, (now - last) / 1000), relaxed);
+    last = now;
+    updateTimer();
+    if (motion.matches) {
+      setTimeout(() => advance(performance.now()), 200);
+    } else {
+      machine.render(visualProps());
+      requestAnimationFrame(advance);
+    }
+  }
+  clockPending = true;
+  requestAnimationFrame(advance);
+}
 resetInput();
 paint();
 if (!sessions[active]) persist();
