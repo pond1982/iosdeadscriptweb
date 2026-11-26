@@ -1,33 +1,83 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dead Script for Mac support · Dead Script for Mac</title>
-<style>
-html {color-scheme: light dark;}
-body {margin: 0 auto; max-width: 44rem; padding: 2.5rem 1.3rem; font: 1.05rem/1.6 "Source Sans 3", -apple-system, sans-serif;}
-h1,h2 {font-family: "Crimson Text", Georgia, serif; line-height: 1.15;}
-h1 {font-size: clamp(2rem, 5vw, 2.7rem); margin: .2em 0;}
-h2 {font-size: 1.45rem; margin: 1.5em 0 .4em;}
-p {margin: .6em 0 1em;}
-nav {margin: 2.2rem 0 1rem; padding-top: .9rem; border-top: 1px solid currentColor;}
-a:focus-visible {outline: 2px solid currentColor; outline-offset: 4px;}
-</style>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dead Script: Final Revision — The game &amp; player support for Mac</title>
+  <meta name="description" content="Step into Elias Thorne’s office. Explore the five chapters of Dead Script, watch real Mac gameplay, browse the artwork, and find keyboard and save help.">
+  <meta name="theme-color" content="#161513"><meta property="og:type" content="website"><meta property="og:title" content="Dead Script: Final Revision"><meta property="og:description" content="Words are like bullets. A first-person typing horror game for Mac."><meta property="og:image" content="https://pond1982.github.io/iosdeadscriptweb/mac/media/elias-office.webp">
+  <link rel="canonical" href="https://pond1982.github.io/iosdeadscriptweb/mac/support.html"><link rel="icon" href="media/mark.webp"><link rel="preload" href="fonts/SpecialElite-Regular.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="site.css"><script defer src="site.js"></script>
 </head>
-<body>
-<main>
-<h1>Dead Script for Mac support</h1>
-<p>For help with Dead Script on macOS, email <a href="mailto:pond1982a@gmail.com?subject=Dead%20Script%20for%20Mac%20support">pond1982a@gmail.com</a>. Include your macOS version and what you saw on screen.</p>
-<h2>Start at the desk or the archive</h2>
-<p>Choose <strong>Learn to type</strong> to practice at Elias’s desk or <strong>Begin story</strong> for the full adventure. The desk uses an English QWERTY keyboard. Use the arrow keys or Tab to choose a menu item and press Return to open it.</p>
-<h2>Correct the clerk’s proof</h2>
-<p>In <strong>First-time playtest</strong>, complete the two F/J/Space lines. The clerk’s proof rolls in automatically. Press the Mac Delete key to lift the crossed-out lowercase e, then type the faint sentence, including its capital and punctuation.</p>
-<h2>Change pace, text and sound</h2>
-<p>Press Command-comma to open <strong>Settings</strong>. Relaxed pace gives you more time during fights. You can enlarge target words, reduce motion or flashes, and adjust narration, music and effects separately.</p>
-<h2>Find a saved game or playtest report</h2>
-<p>Choose <strong>Continue</strong> on the title screen to resume at your campaign bookmark. Lessons keep a separate record. At the end of a first-time playtest, choose <strong>Show in Finder</strong> to reveal its Markdown report or <strong>Copy report</strong> to copy the text. Include a report in a support message only if you want to share it.</p>
+<body class="game-page" id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="mast"><div class="wrap mast-inner">
+  <a class="brand" href="#top"><span class="brand-icon" aria-hidden="true"><i></i></span>Dead Script</a>
+  <nav class="main-nav" aria-label="Main navigation"><a href="#top" aria-current="page">The game</a><a href="art/">Art archive</a><a href="journal.html">Journal</a><a href="#support">Support</a></nav>
+  <a class="mast-guide" href="#guide">Player guide <span aria-hidden="true">↗</span></a>
+</div></header>
+<main id="main">
+  <section class="hero" aria-labelledby="game-title">
+    <picture class="hero-art"><source media="(max-width: 620px)" srcset="media/elias-office-mobile.webp"><img src="media/elias-office.webp" fetchpriority="high" width="1672" height="941" alt="Lamplight falls on a black typewriter, a marked proof and a strip of Golden Ribbon in Elias’s rain-streaked office."></picture>
+    <div class="wrap hero-inner">
+      <p class="eyebrow hero-kicker">First-person typing horror</p>
+      <h1 id="game-title"><span>DEAD</span><span>SCRIPT</span></h1>
+      <p class="hero-subtitle">The Final Revision of Oakhaven</p>
+      <p class="hero-copy">An earlier draft of you is dying on the archive steps. He has your face. He has the Golden Ribbon.</p>
+      <div class="hero-actions"><a class="button button-red" href="#footage" data-watch><span class="play-icon" aria-hidden="true"></span>Watch gameplay</a><a class="button button-glass" href="#guide">Player guide <span class="arrow" aria-hidden="true">↘</span></a></div>
+    </div>
+    <div class="hero-caption"><span aria-hidden="true"></span>Elias Thorne’s office</div>
+  </section>
+  <div class="facts"><div class="wrap facts-inner">
+    <span><i class="device-icon" aria-hidden="true"></i>Made for macOS</span><span><b>05</b> story chapters</span><span><b>33</b> typing lessons</span><span><i class="offline-icon" aria-hidden="true">◇</i>Single-player · Offline</span>
+  </div></div>
+
+  <section class="world wrap section" aria-labelledby="world-title" id="chapters">
+    <div class="section-head"><div><p class="eyebrow">The manuscript</p><h2 id="world-title">Inside Oakhaven</h2></div><div class="chapter-nav" aria-label="Browse chapters"><button type="button" class="nav-arrow" data-scroll="-1" aria-label="Previous chapters" disabled>←</button><button type="button" class="nav-arrow" data-scroll="1" aria-label="Next chapters">→</button></div></div>
+    <div class="chapter-track" aria-label="Five story chapters" tabindex="0">
+      <a class="chapter chapter-one" href="#chapter-i" data-chapter="0"><img src="media/chapter-1.webp" srcset="media/chapter-1-small.webp 640w, media/chapter-1.webp 1152w" sizes="(max-width:620px) 78vw, 32vw" width="1152" height="648" loading="lazy" alt="The Redactionist under a blood-red arched window."><div><span class="chapter-index">Chapter I</span><h3>The Morgue of Deleted Scenes</h3></div><i aria-hidden="true">↗</i></a>
+      <a class="chapter chapter-two" href="#chapter-ii" data-chapter="1"><img src="media/chapter-2.webp" srcset="media/chapter-2-small.webp 640w, media/chapter-2.webp 1152w" sizes="(max-width:620px) 78vw, 32vw" width="1152" height="648" loading="lazy" alt="A brass cylinder draws cyan ink through the printworks."><div><span class="chapter-index">Chapter II</span><h3>The Rotting Rotogravure</h3></div><i aria-hidden="true">↗</i></a>
+      <a class="chapter chapter-three" href="#chapter-iii" data-chapter="2"><img src="media/chapter-3.webp" srcset="media/chapter-3-small.webp 640w, media/chapter-3.webp 1152w" sizes="(max-width:620px) 78vw, 32vw" width="1152" height="648" loading="lazy" alt="Moonlight and magenta ink on the wharf."><div><span class="chapter-index">Chapter III</span><h3>The Wharf of Wasted Ink</h3></div><i aria-hidden="true">↗</i></a>
+      <a class="chapter chapter-four" href="#chapter-iv" data-chapter="3"><img src="media/chapter-4-small.webp" width="640" height="360" loading="lazy" alt="The Bookbinder stitches an open ledger."><div><span class="chapter-index">Chapter IV</span><h3>The Bindery of Bound Souls</h3></div><i aria-hidden="true">↗</i></a>
+      <a class="chapter chapter-five" href="#chapter-v" data-chapter="4"><img src="media/chapter-5-small.webp" width="640" height="360" loading="lazy" alt="A spiral of white pages in the Author’s chamber."><div><span class="chapter-index">Chapter V</span><h3>The Blank Page</h3></div><i aria-hidden="true">↗</i></a>
+    </div>
+    <div class="world-foot"><p>Five districts, each with its own rules of revision.</p><a class="text-link" href="art/">Browse all 119 artworks <span aria-hidden="true">↗</span></a></div>
+    <div class="chapter-notes" id="chapter-notes">
+      <article id="chapter-i"><h3>The Morgue of Deleted Scenes</h3><p>On the archive steps, a dying earlier draft of Elias opens his hand. The Golden Ribbon inside fits the revolver. Down in the Filing Aisle, each correct letter fires a shot. At the Red Fissure, each finished word gives Elias another plank to stand on.</p></article>
+      <article id="chapter-ii"><h3>The Rotting Rotogravure</h3><p>The cyan presses stamp copies of a Deadline in rows. On the drying line, a folded Errata springs between words. When the Heavy-Handed Critic crosses out a line, type STET to insist that it stands.</p></article>
+      <article id="chapter-iii"><h3>The Wharf of Wasted Ink</h3><p>Magenta ink rises between the piers, taking the lettering with it. Work the signal lantern, track the surviving copies and learn when to cite the original.</p></article>
+      <article id="chapter-iv"><h3>The Bindery of Bound Souls</h3><p>In the Bindery, a word can be sewn to another word. Follow the thread, unpick the binding and cut the chain before the Bookbinder closes her ledger.</p></article>
+      <article id="chapter-v"><h3>The Blank Page</h3><p>Beyond the dead-letter lift, names lose their ink. Hold each fading word long enough to anchor it to the page. At the top of the Tower, Elias must face the Author of Oakhaven.</p></article>
+    </div>
+  </section>
+
+  <section class="footage-band" id="footage"><div class="wrap footage-grid"><div class="footage-copy"><p class="eyebrow">In play</p><h2>Words are<br> like bullets.</h2><p>When a Rewrite enters the aisle, look at the word it carries. Each correct letter fires Elias’s revolver. Finish the word and watch the creature break apart.</p><a class="text-link" href="#guide">Learn the controls <span aria-hidden="true">↘</span></a></div>
+    <figure class="screen-frame"><video id="game-film" controls playsinline preload="none" poster="media/trailer.webp" width="1152" height="720" aria-label="Dead Script gameplay on Mac"><source src="media/trailer.mp4" type="video/mp4"><track kind="captions" srclang="en" label="English" src="media/trailer.vtt"> <a href="media/trailer.mp4">Watch the gameplay reel</a></video><figcaption><span>Gameplay from the Mac builds</span><span>00:28 · English captions</span></figcaption></figure>
+  </div></section>
+
+  <section class="guide-band" id="guide" aria-labelledby="guide-heading"><div class="wrap guide-grid">
+    <figure class="desk-plate"><img width="1344" height="840" src="media/desk.webp" srcset="media/desk-small.webp 768w, media/desk.webp 1344w" sizes="(max-width:790px) 100vw, 52vw" loading="lazy" alt="Elias’s gloved hands rest over the illuminated typewriter keys at the Scribe’s Desk."><figcaption>The Scribe’s Desk</figcaption></figure>
+    <div class="guide-copy"><p class="eyebrow">Player guide</p><h2 id="guide-heading">At the keys</h2><p class="guide-lead">Everything you need to play is on your Mac keyboard.</p>
+      <div class="guide-tabs" aria-label="Guide topics"><a href="#typing">Typing</a><a href="#combat">Combat</a><a href="#settings">Settings</a></div>
+      <div class="guide-pane" id="typing"><h3>Start at Elias’s desk</h3><p>Choose <strong>Learn to type</strong> for 33 lessons on an English QWERTY keyboard. Follow the lit finger and copy the faint letters onto the paper.</p><p>In the first-time playtest, two F/J lines feed straight into the clerk’s proof. Press <kbd>Delete</kbd> to lift the stray letter, then copy the note.</p></div>
+      <div class="guide-pane" id="combat"><h3>Fire with a word</h3><p>Choose <strong>Begin story</strong> to follow Elias. Type the word on the Golden Ribbon handoff, then the word above each enemy. The first threat waits for your first correct letter.</p><p>A mistype preserves the letters you have landed. Press <kbd>Esc</kbd> to pause and <kbd>Return</kbd> to resume.</p></div>
+      <div class="guide-pane" id="settings"><h3>Set your pace</h3><p>Press <kbd>⌘</kbd> + <kbd>,</kbd> for <strong>Settings</strong>. Relaxed pace doubles the enemy and parry windows. Large Type increases the size of words and captions.</p><p>Reduce Motion and Reduce Flash work independently. Music, effects and Elias’s narration each have their own volume control.</p></div>
+    </div></div></section>
+
+  <section class="witness" aria-labelledby="witness-title"><div class="wrap witness-grid">
+    <div class="witness-art"><img src="art/plates/cinema-intro-a.webp" width="1550" height="872" alt="Elias stands outside Oakhaven’s archive on a rain-darkened street." loading="lazy"></div>
+    <div class="witness-copy"><p class="eyebrow">From the opening scene</p><h2 id="witness-title">Elias on the archive steps</h2>
+      <blockquote>“Rain had taken the ink off every street sign in Oakhaven. I knew the way to the archive by the sound of its loose step.”</blockquote>
+      <audio controls preload="none" aria-label="Listen to Elias read the opening lines"><source src="media/elias-opening.mp3" type="audio/mpeg"><a href="media/elias-opening.mp3">Listen to the opening lines</a></audio>
+    </div></div></section>
+  <section class="journal-tease wrap section" aria-labelledby="journal-title"><div><p class="eyebrow">Development journal</p><h2 id="journal-title">Making the manuscript</h2><p>How the ink revolver found its rhythm, Elias found his voice, and a player at the typewriter changed the clerk’s proof.</p></div><img class="journal-ribbon" src="media/ribbon.webp" alt="" width="560" height="99" loading="lazy"><a class="button button-glass" href="journal.html">Read the journal <span aria-hidden="true">↗</span></a></section>
+  <section class="support-band" id="support" aria-labelledby="support-heading"><div class="wrap support-grid">
+    <div><p class="eyebrow">Mac support</p><h2 id="support-heading">Need a hand?</h2><p>For help, email Pondd with your macOS version and the chapter or lesson where you ran into trouble.</p><a class="contact-link" href="mailto:pond1982a@gmail.com?subject=Dead%20Script%20for%20Mac%20support">Email support <span aria-hidden="true">↗</span></a></div>
+    <div class="support-answers">
+      <details><summary>How do I continue a saved game?</summary><p>Choose <strong>Continue</strong> on the title screen. After quitting, the campaign resumes at its saved passage or chapter. Office lessons keep a separate bookmark.</p></details>
+      <details><summary>Where is my playtest report?</summary><p>Choose <strong>Show in Finder</strong> on the results screen to reveal the Markdown file, or <strong>Copy report</strong> to copy its contents. Early exits save a partial report. You choose whether to share it.</p></details>
+      <details><summary>Can I change the sound, flashes or typing pace?</summary><p>Yes. Open <strong>Settings</strong> with <kbd>⌘</kbd> + <kbd>,</kbd>. You can adjust narration, music and effects separately, reduce flashes and motion, enlarge the type or choose Relaxed pace.</p></details>
+      <details><summary>Does the game need an internet connection?</summary><p>The game plays offline. The artwork, narration and music ship with the app. Progress and playtest records stay on your Mac. <a href="privacy.html">Read the Mac privacy policy.</a></p></details>
+    </div></div></section>
 </main>
-<nav aria-label="Related page"><a href="privacy.html">Mac privacy policy</a></nav>
-</body>
-</html>
+<footer class="site-foot"><div class="wrap foot-inner"><div><a class="brand" href="#top"><span class="brand-icon" aria-hidden="true"><i></i></span>Dead Script</a><p>© 2026 Suwitcha Sugthana · Pondd</p></div><nav aria-label="Footer"><a href="art/">Art archive</a><a href="journal.html">Journal</a><a href="#support">Support</a><a href="privacy.html">Privacy</a></nav></div></footer>
+<dialog class="case-dialog" id="case-dialog" aria-labelledby="case-title"><button class="case-close nav-arrow" type="button" aria-label="Close chapter">×</button><img id="case-art" alt=""><div class="case-text"><p class="eyebrow" id="case-index"></p><h2 id="case-title"></h2><p id="case-body"></p><a href="art/" class="text-link">View the art archive <span aria-hidden="true">↗</span></a></div></dialog>
+</body></html>
