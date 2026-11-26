@@ -4,8 +4,24 @@
   aspect-ratio: 8 / 5;
   overflow: hidden;
   isolation: isolate;
-  background: #251c16 url("./media/desktop.webp") center / 100% 100% no-repeat;
+  background: #221911 url("./media/desk-wings.webp") center bottom / max(100%, var(--wings-width, 100%)) auto no-repeat;
 }
+
+/* The original crop starts halfway down this full set painting. Positioning both paintings
+   from the foot of the desk keeps the keys and the moving platen registered on every screen. */
+.machine-stage::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  left: 50%;
+  bottom: 0;
+  width: var(--surround-width, 200%);
+  height: var(--surround-height, 200%);
+  transform: translateX(-50%);
+  background: url("./media/desk-surround.webp") center / 100% 100% no-repeat;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 15%, #000 85%, transparent 100%);
+}
+
 .machine-stage > .desk-mechanism {
   position: absolute;
   inset: 0;
@@ -14,3 +30,18 @@
   height: 100%;
   pointer-events: none;
 }
+
+/* At tall phone aspect ratios the camera sees over the top edge of the master painting.
+   Its upper edge is plain wood, so continue the same grain into the reveal. */
+.machine-stage::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--surround-height, 200%);
+  height: max(0px, calc(100% - var(--surround-height, 200%)));
+  background: #372113 url("./media/desk-surround.webp") center top / var(--surround-width, 200%) auto no-repeat;
+  transform: scaleY(-1);
+  pointer-events: none;
+}
+.machine-stage > .desk-mechanism { z-index: 1; }

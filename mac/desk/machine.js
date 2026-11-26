@@ -1,4 +1,5 @@
 import { fingerCue } from "./engine.js";
+import { createDeskAudio } from "./desk-audio.js";
 
 const W = 1152;
 const H = 720;
@@ -84,40 +85,6 @@ function normalizeKey(ch) {
   return ch==="Backspace" || ch==="Delete" ? "⌫" : ch;
 }
 
-// Sound files use the same key, error and carriage foley as the Mac lesson. The audio
-// context is created only after the caller receives the player's sound-on gesture.
-function machineAudio() {
-  let context, enabled=false, closed=false;
-  const buffers=new Map();
-  return {
-    toggle(on) {
-      enabled=!!on;
-      if (!enabled || closed) return;
-      const Audio=window.AudioContext || window.webkitAudioContext;
-      if (!Audio) return;
-      if (!context) {
-        context=new Audio();
-        ["key","error","desk-line-feed"].forEach(async name => {
-          try {
-            const response=await fetch(media(name+".wav"));
-            if (response.ok) buffers.set(name,await context.decodeAudioData(await response.arrayBuffer()));
-          } catch { /* Audio playback is optional. */ }
-        });
-      }
-      if (context.state==="suspended") context.resume().catch(()=>{});
-    },
-    play(name) {
-      if (!enabled || !buffers.has(name) || context?.state!=="running") return;
-      const voice=context.createBufferSource(), gain=context.createGain();
-      voice.buffer=buffers.get(name);
-      gain.gain.value=name==="desk-line-feed" ? .38 : .32;
-      voice.connect(gain).connect(context.destination);
-      voice.start();
-    },
-    destroy() { closed=true; if (context) context.close().catch(()=>{}); },
-  };
-}
-
 export function mountMachine(stage) {
   const display=canvas(W,H), ctx=display.getContext("2d");
   display.className="desk-mechanism";
@@ -125,10 +92,13 @@ export function mountMachine(stage) {
   stage.append(display);
   const gloves=canvas(936,238), leather=gloves.getContext("2d");
   const keyboard=canvas(W,H), brightKeyboard=canvas(W,H);
-  const audio=machineAudio();
+  const audio=createDeskAudio();
   let mounted=true, frame=0, prevTime=0, layoutLarge;
   let view={line:"",typed:"",history:[],next:[],targets:[],selected:"",reducedMotion:false};
   let column=0, row=0, goalCol=0, goalRow=0, lastStroke=-1000, strikeKey="", feedAt=-1000;
+  // Native machine coordinates are the lower middle 1152 × 720 of the larger office painting.
+  // The drawing origin follows the case while the wood and paper continue up a tall viewport.
+  let scene = {scale: 1, left: 0, top: 0, width: W, height: H};
   let latestField=[];
   let paperExit=false, paperEntry=-1000;
   const fingerPress=new Map(), keyPress=new Map();
@@ -138,7 +108,8 @@ export function mountMachine(stage) {
     if (mounted && !frame) frame=requestAnimationFrame(draw);
   }
   for (const name of ["paper","platen","gloves","finger-motion","cutouts","keycaps"]) art[name]=loadImg(name,wake);
-  const largeType=()=>!!view.large || stage.clientWidth<520;
+  document.fonts?.load("46px 'Special Elite'").then(wake, () => {});
+  const largeType=()=>!!view.large || scene.scale*W<530;
   function track() {
     const limit=largeType() ? 15 : 18;
     const lines=rowsFor(view.line,limit);
@@ -153,11 +124,19 @@ export function mountMachine(stage) {
   function resize() {
     const box=stage.getBoundingClientRect();
     if (!box.width || !box.height) return;
-    // Cap the backing buffer so a Retina desktop can sustain repeated strokes.
-    const ratio=Math.min(window.devicePixelRatio || 1,2,1920/box.width);
-    const width=Math.round(box.width*ratio), height=Math.round(box.height*ratio);
-    if (display.width!==width || display.height!==height) {
-      display.width=width; display.height=height;
+    // A small overhang at phone widths preserves the entire keyboard with readable caps.
+    // Pin the case to the lower edge as it sits in the original full office painting.
+    const scale = Math.min(box.height / H, box.width / (W * .89));
+    const width = Math.round(box.width * Math.min(window.devicePixelRatio || 1, 2, 2560 / box.width));
+    const height = Math.max(1, Math.round(box.height * width / box.width));
+    scene = {scale, left: (box.width - W * scale) / 2, top: box.height - H * scale,
+      width: box.width, height: box.height};
+    stage.style.setProperty("--surround-width", (W * 2 * scale) + "px");
+    stage.style.setProperty("--surround-height", (H * 2 * scale) + "px");
+    stage.style.setProperty("--wings-width", (H * 3.65 * scale) + "px");
+    if (display.width !== width || display.height !== height) {
+      display.width = width;
+      display.height = height;
     }
     track();
     wake();
@@ -171,10 +150,15 @@ export function mountMachine(stage) {
     const shift=reduced ? 0 : (3.5-column)*pitch;
     const x0=reduced ? W*.40 : W*.50-column*pitch-pitch*.5;
     const sheetX=W*.235+shift, sheetW=W*.53;
-    const travel=reduced ? 0 : H*.42*(paperExit ? -smooth(45,425,now-feedAt) : (1-smooth(0,280,now-paperEntry)));
-    const top=H*.012-row*lineStep+travel, base=H*.304+travel, bottom=H*.371+Math.min(0,travel);
+    const visibleTop = -scene.top / scene.scale;
+    const feedDistance = H*.42 - visibleTop;
+    const travel = reduced ? 0 : feedDistance * (paperExit ? -smooth(45,425,now-feedAt) : 1-smooth(0,280,now-paperEntry));
+    const extraPaper = Math.min(-visibleTop * .78, H * 1.16);
+    const top = H*.012 - extraPaper - row*lineStep + travel;
+    const base = H*.304 + travel, bottom = H*.371 + Math.min(0,travel);
+    const clipTop = Math.max(visibleTop, top);
     ctx.save();
-    ctx.beginPath();ctx.rect(sheetX,Math.max(0,top),sheetW,Math.max(0,bottom-Math.max(0,top)));ctx.clip();
+    ctx.beginPath();ctx.rect(sheetX,clipTop,sheetW,Math.max(0,bottom-clipTop));ctx.clip();
     if(ready(art.paper) && bottom>top) {
       const paper=art.paper, sourceH=Math.min(paper.height,paper.height*(bottom-top)/(H*.44+(row+8)*lineStep));
       ctx.drawImage(paper,0,0,paper.width,sourceH,sheetX,top,sheetW,bottom-top);
@@ -186,6 +170,17 @@ export function mountMachine(stage) {
     ctx.fillStyle="rgba(94,70,46,.13)";
     ctx.fillRect(sheetX+sheetW*.073,top+H*.05+3,sheetW*.854,1);
     ctx.textBaseline="alphabetic";
+    if (view.cover) {
+      const center = sheetX + sheetW / 2;
+      const titleY = top + (base - top) * .49;
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#3c3025";
+      ctx.font = (large ? 53 : 46) + "px 'Special Elite', Courier, monospace";
+      ctx.fillText("The Scribe’s Desk", center, titleY, sheetW * .86);
+      ctx.font = "bold " + (large ? 22 : 17) + "px Courier, monospace";
+      ctx.fillStyle = "#73614c";
+      ctx.fillText("ELIAS THORNE  ·  OAKHAVEN", center, titleY + (large ? 36 : 32), sheetW * .76);
+    }
     if(view.correction) {
       ctx.fillStyle="#813b31";ctx.textAlign="left";ctx.font="bold 19px Courier, monospace";
       ctx.fillText("Lift the stray e with Delete.",sheetX+sheetW*.073,top+H*.168);
@@ -195,7 +190,7 @@ export function mountMachine(stage) {
     let physicalRow=0;
     function paint(text,ink,cursor) {
       const y=base+(physicalRow-row)*lineStep;
-      if(y>0 && y<H*.322) for(let i=0;i<text.length;i++) {
+      if(y>visibleTop && y<H*.322) for(let i=0;i<text.length;i++) {
         ctx.fillStyle=i<ink.length ? "#322921" : "#766850";
         const left=x0+i*pitch, glyph=i<ink.length ? ink[i] : text[i];
         ctx.fillText(glyph,left+pitch/2,y);
@@ -302,13 +297,17 @@ export function mountMachine(stage) {
       column+=t*(goalCol-column); row+=t*(goalRow-row);
       if(!moving) {column=goalCol;row=goalRow;}
     }
-    ctx.setTransform(display.width/W,0,0,display.height/H,0,0);
-    ctx.clearRect(0,0,W,H); drawSheet(now);paintKeys(now);drawGloves(now);
+    const pixelX = display.width / scene.width, pixelY = display.height / scene.height;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, display.width, display.height);
+    ctx.setTransform(pixelX * scene.scale, 0, 0, pixelY * scene.scale, pixelX * scene.left, pixelY * scene.top);
+    drawSheet(now);paintKeys(now);drawGloves(now);
     if(moving || now-lastStroke<240 || (paperExit && now-feedAt<435) || now-paperEntry<290) wake();
   }
   resize();
   return {
     render(state) {
+      const previousRow = goalRow, previousLine = view.line, previousLength = view.typed.length;
       if(paperExit && (state.correction || String(state.line ?? state.prompt ?? "")!==view.line)) {
         paperExit=false;paperEntry=performance.now();row=0;column=0;
       }
@@ -327,7 +326,11 @@ export function mountMachine(stage) {
         for(const f of cue.fingers) litFingers.add(f);
         if(cue.shift) {litKeys.add(cue.shift);litFingers.add(cue.shift);}
       }
-      track();wake();
+      track();
+      if (goalRow > previousRow && view.line === previousLine && view.typed.length === previousLength + 1) {
+        audio.play("desk-line-feed");
+      }
+      wake();
     },
     strike(ch, {correct=true}={}) {
       const now=performance.now(), cue=fingerCue(normalizeKey(ch));
@@ -337,10 +340,10 @@ export function mountMachine(stage) {
       if(cue.shift) {keyPress.set(cue.shift,now);fingerPress.set(cue.shift,now);}
       audio.play(correct ? "key" : "error");wake();
     },
-    feed({sheet=false}={}) {
+    feed({sheet=false,filed=sheet}={}) {
       feedAt=performance.now();
       if(sheet && !view.reducedMotion) paperExit=true;
-      audio.play("desk-line-feed");
+      audio.play(filed ? "desk-carriage" : "desk-line-feed");
       wake();
     },
     sound(enabled) {audio.toggle(enabled);},

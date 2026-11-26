@@ -35,6 +35,14 @@ function validSlot(id, value) {
   return id === first && isSamplePage ? sheet : null;
 }
 
+function savedSound(book) {
+  if (book.sound !== false) return true;
+  if (book.soundChosen === true) return false;
+  // The original desk wrote its silent default just by visiting. Keep
+  // established players' setting and give untouched desks the new default.
+  return !Object.values(book.sheets || {}).some(sheet => sheet?.attempts > 0);
+}
+
 const book = stored();
 const sessions = {};
 for (const [id, value] of Object.entries(book.sheets || {})) {
@@ -45,7 +53,7 @@ let marks = restoreMarks(book.marks);
 let active = Object.hasOwn(sessions, book.active) ? book.active : first;
 let state = sessions[active] || createSheet(0, 1, { sample: true });
 let mode = state.done ? 'filed' : state.attempts ? 'paused' : 'ready';
-let soundEnabled = book.sound === true;
+let soundEnabled = savedSound(book);
 let relaxed = book.relaxed === true;
 let feedTimer = 0;
 let composing = false;
@@ -59,7 +67,8 @@ function persist(kind = 'sheet') {
     }
     localStorage.setItem(storageKey, JSON.stringify({
       version: 1, marks, active: kind === 'sheet' ? active : other.active,
-      sound: kind === 'sound' ? soundEnabled : other.sound === true,
+      sound: kind === 'sound' ? soundEnabled : savedSound(other),
+      soundChosen: kind === 'sound' || other.soundChosen === true,
       relaxed: kind === 'relaxed' ? relaxed : other.relaxed === true,
       sheets: kind === 'sheet' ? { ...(other.sheets || {}), [active]: state } : other.sheets || {},
     }));
@@ -90,6 +99,7 @@ function visualProps() {
   return {
     line: state.prompt, typed: state.typed, expected: keys[0] || '', next: keys,
     history: state.lines.slice(0, state.line), correction: state.correctionPending,
+    cover: mode === 'ready' && active === first && !state.attempts && state.section === 0,
     reducedMotion: motion.matches, targets: state.targets, selected: state.selected,
     fieldTime: state.fieldTime, fieldLimit: state.fieldLimit,
   };
@@ -149,6 +159,8 @@ function paint() {
   get('file-name').textContent = active === first ? 'The first sitting' : 'File ' + String(state.section + 1).padStart(2, '0') + ' / ' + sectionData().title;
   get('sheet-title').textContent = active === first && !trialHome ? 'The clerk’s proof' : sheetData().title;
   get('sheet-brief').textContent = trialHome ? 'A property slip has come under the office door. Elias feeds a sheet into his typewriter to compare its marks with his own.' : sheetData().clue;
+  get('notes-heading').textContent = get('sheet-title').textContent;
+  get('sheet-help').textContent = sheetData().hint.replace('Mac Delete', 'Delete or Backspace');
   get('sheet-line').textContent = 'Line ' + (state.line + 1) + ' of ' + state.lines.length;
   let written = state.lines.slice(0, state.line).join('').length + (state.correctionPending ? 0 : state.typed.length);
   let total = state.lines.join('').length;
@@ -168,7 +180,8 @@ function paint() {
   play.dataset.action = mode === 'typing' ? 'pause' : 'start';
   if (mode !== 'typing' && mode !== 'feeding') play.append(node('span', ' →'));
   sound.disabled = false;
-  sound.textContent = 'Sound ' + (soundEnabled ? 'on' : 'off');
+  get('sound-label').textContent = soundEnabled ? 'Sound on' : 'Sound off';
+  sound.title = soundEnabled ? 'Mute typewriter sound' : 'Enable typewriter sound';
   sound.setAttribute('aria-pressed', String(soundEnabled));
   paintKeys(keys);
   paintReadout();
@@ -223,6 +236,7 @@ function choose(id, section, sheet, repeat = false) {
 function showResult() {
   const sample = active === first;
   const last = state.sheet === sectionData().sheets.length - 1;
+  get('result-game').hidden = !(sample || !nextSheet(state.section, state.sheet));
   get('result-kicker').textContent = sample ? 'The first sitting' : 'Filed in the casebook';
   get('result-title').textContent = sample ? 'The corrected proof' : sheetData().title;
   get('result-clue').textContent = sample ? 'The double-struck J matched my office carbon. I folded the clerk’s note into my coat. A light still burned in the archive.' : last ? sectionData().finding : sheetData().clue;
@@ -258,7 +272,7 @@ function takeKey(key) {
   if (result === 'sheet_done') {
     mode = 'filed';
     marks = recordBest(marks, state);
-    machine.feed();
+    machine.feed({ filed: true });
     persist();
     paint();
     showResult();
@@ -335,7 +349,13 @@ get('next-sheet').addEventListener('click', () => {
   if (next) choose(sheetId(next.section, next.sheet), next.section, next.sheet);
   else openIndex();
 });
-for (const modal of [index, receipt]) {
+const notes = get('sheet-notes');
+get('open-notes').addEventListener('click', () => {
+  pause();
+  notes.showModal();
+  notes.querySelector('[data-close]').focus({ preventScroll: true });
+});
+for (const modal of [index, receipt, notes]) {
   modal.querySelector('[data-close]').addEventListener('click', () => modal.close());
   modal.addEventListener('click', event => {
     if (event.target !== modal) return;
@@ -454,6 +474,91 @@ function runFieldClock() {
   clockPending = true;
   requestAnimationFrame(advance);
 }
+const explore = get('explore-menu');
+document.addEventListener('click', event => {
+  if (!explore.open) return;
+  if (!explore.contains(event.target) || event.target.closest('.explore-links a')) explore.open = false;
+});
+explore.addEventListener('keydown', event => {
+  if (event.key !== 'Escape') return;
+  explore.open = false;
+  get('explore-toggle').focus();
+  event.preventDefault();
+});
+
+for (const link of document.querySelectorAll('[data-practice-file]')) {
+  link.addEventListener('click', event => {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const file = Number(link.dataset.practiceFile);
+    const sheet = Number(link.dataset.practiceSheet ?? 0);
+    if (!Number.isInteger(file) || !Number.isInteger(sheet) || !SECTIONS[file]?.sheets[sheet]) return;
+    event.preventDefault();
+    history.replaceState(null, '', location.pathname + location.search);
+    choose(sheetId(file, sheet), file, sheet);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  });
+}
+
+const full = get('fullscreen-toggle');
+const root = document.documentElement;
+const enterScreen = root.requestFullscreen || root.webkitRequestFullscreen;
+const leaveScreen = document.exitFullscreen || document.webkitExitFullscreen;
+const fullscreenElement = () => document.fullscreenElement || document.webkitFullscreenElement;
+function syncScreen() {
+  const on = Boolean(fullscreenElement());
+  const label = on ? 'Exit full screen' : 'Full screen';
+  full.setAttribute('aria-pressed', String(on));
+  full.setAttribute('aria-label', label);
+  full.title = label;
+  get('fullscreen-label').textContent = label;
+  root.toggleAttribute('data-desk-fullscreen', on);
+}
+if ((document.fullscreenEnabled || document.webkitFullscreenEnabled) && enterScreen && leaveScreen) {
+  full.hidden = false;
+  syncScreen();
+  full.addEventListener('click', async () => {
+    const status = get('screen-status');
+    status.textContent = '';
+    try {
+      if (fullscreenElement()) {
+        await leaveScreen.call(document);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        await enterScreen.call(root);
+      }
+    } catch {
+      status.textContent = 'Full screen is unavailable in this window. You can keep typing here.';
+    }
+    syncScreen();
+  });
+  document.addEventListener('fullscreenchange', syncScreen);
+  document.addEventListener('webkitfullscreenchange', syncScreen);
+}
+const mast = document.querySelector('.desk-mast');
+new ResizeObserver(() => {
+  document.body.style.setProperty('--mast-actual', mast.getBoundingClientRect().height + 'px');
+}).observe(mast);
+
+// A software keyboard can cover part of Safari’s layout viewport.
+const viewport = window.visualViewport;
+if (viewport) {
+  function fitKeyboard() {
+    const wasOpen = document.body.classList.contains('keyboard-open');
+    const open = document.activeElement === input && Math.abs(viewport.scale - 1) < .03 &&
+      window.innerHeight - viewport.height > 100;
+    document.body.classList.toggle('keyboard-open', open);
+    if (open) {
+      document.body.style.setProperty('--usable-view', viewport.height + 'px');
+      if (!wasOpen) requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    } else {
+      document.body.style.removeProperty('--usable-view');
+    }
+  }
+  viewport.addEventListener('resize', fitKeyboard);
+  input.addEventListener('focus', fitKeyboard);
+  input.addEventListener('blur', fitKeyboard);
+}
+
 resetInput();
 paint();
 if (!sessions[active]) persist();

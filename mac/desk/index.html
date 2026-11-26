@@ -2,71 +2,159 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#151412">
-  <title>The Scribe’s Desk — Play the Dead Script typing lessons</title>
-  <meta name="description" content="Sit at Elias Thorne’s typewriter. Follow the finger cues through 33 free typing lessons and uncover the story of a misfiled property slip in Oakhaven.">
+  <title>Free Online Touch Typing Lessons | The Scribe’s Desk · Dead Script</title>
+  <meta name="description" content="Learn to type online with 33 free touch typing lessons. Start with F and J, follow the gloved finger cues, and uncover a mystery from the Dead Script typing game.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="The Scribe’s Desk · Dead Script">
+  <meta property="og:title" content="Free Touch Typing Lessons at The Scribe’s Desk · Dead Script">
   <meta property="og:description" content="Learn touch typing at Elias Thorne’s typewriter and follow an old property slip through eight office case files.">
-  <meta property="og:image" content="https://pond1982.github.io/iosdeadscriptweb/mac/media/desk.webp">
+  <meta property="og:image" content="https://pond1982.github.io/iosdeadscriptweb/mac/desk/media/desk-preview.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:alt" content="A sheet in Elias’s mechanical typewriter above brass keys and his gloved hands.">
+  <meta property="og:url" content="https://pond1982.github.io/iosdeadscriptweb/mac/desk/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="../../sitemap.xml">
   <link rel="canonical" href="https://pond1982.github.io/iosdeadscriptweb/mac/desk/">
   <link rel="icon" href="../media/mark.webp">
   <link rel="preload" href="../fonts/SpecialElite-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../site.css">
   <link rel="stylesheet" href="desk.css">
   <link rel="stylesheet" href="machine.css">
+  <link rel="stylesheet" href="course-guide.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "@id": "https://pond1982.github.io/iosdeadscriptweb/mac/desk/#typing-course",
+    "url": "https://pond1982.github.io/iosdeadscriptweb/mac/desk/",
+    "name": "The Scribe’s Desk — Free Online Touch Typing Lessons",
+    "description": "A free, 33-lesson English QWERTY touch typing course set in the world of Dead Script. Learn finger placement, reach across the keyboard, use Shift and Delete, and practise words in moving target exercises.",
+    "inLanguage": "en",
+    "educationalLevel": "Beginner",
+    "isAccessibleForFree": true,
+    "teaches": ["Touch typing", "Home row finger placement", "English QWERTY keyboard skills", "Typing punctuation and numbers", "Proof correction"],
+    "provider": {"@type": "Person", "name": "Suwitcha Sugthana", "alternateName": "Pondd"}
+  }
+  </script>
   <script type="module" src="desk.js"></script>
 </head>
 <body class="desk-page" id="top">
 <a class="skip-link" href="#main">Skip to typing desk</a>
-<header class="mast"><div class="wrap mast-inner">
-  <a class="brand" href="../support.html"><span class="brand-icon" aria-hidden="true"><i></i></span>Dead Script</a>
-  <nav class="main-nav" aria-label="Main navigation"><a href="../support.html">The game</a><a href="../art/">Art archive</a><a href="../journal.html">Journal</a><a href="../support.html#support">Support</a></nav>
-  <a class="mast-guide" href="./" aria-current="page">Typing desk <span aria-hidden="true">↘</span></a>
-</div></header>
-<main class="desk-wrap wrap" id="main">
-  <header class="desk-heading">
-    <div><p class="eyebrow">Touch typing in Oakhaven</p><h1>The Scribe’s Desk</h1></div>
-    <a class="index-link" href="#lessons" id="open-index"><span aria-hidden="true">☰</span> Lesson index</a>
-  </header>
-  <noscript><div class="script-note">Enable JavaScript to play the typing lessons. You can also <a href="../support.html#guide">read the Mac player guide</a>.</div></noscript>
-  <div class="desk-layout">
-    <section class="instrument" aria-label="Playable typewriter">
-      <div class="machine-top"><span class="machine-label"><i aria-hidden="true"></i>Elias Thorne’s office</span>
-        <button type="button" id="sound-toggle" aria-pressed="false" aria-label="Typewriter sound" disabled>Sound off</button>
-      </div>
-      <div id="stage" class="machine-stage" aria-hidden="true"></div>
-      <div class="input-bar">
-        <label class="input-well" for="desk-input">
-          <span class="input-label" id="line-label">Copy the faded line</span>
-          <span id="readout" class="readout" aria-hidden="true"></span>
-          <textarea rows="1" id="desk-input" aria-label="Type the current line" aria-describedby="input-description"
-            autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="text" enterkeyhint="done" disabled></textarea>
-        </label>
-        <button type="button" class="desk-action" id="play-toggle" disabled>Start typing <span aria-hidden="true">→</span></button>
-      </div>
-      <p id="input-description" class="sr-only"></p>
-      <p id="announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
-    </section>
-    <aside class="file-notes" aria-labelledby="sheet-title">
-      <div class="file-header"><span class="file-rule"></span><span id="file-name">The first sitting</span></div>
-      <h2 id="sheet-title">A thumb’s width</h2>
-      <p id="sheet-brief" class="sheet-brief">Elias finds a property slip under his office door. He feeds a sheet into the machine to compare its marks with his own.</p>
-      <div class="sheet-progress"><div><span id="sheet-line">Line 1 of 2</span><span id="sheet-percent"></span></div><progress aria-label="Progress through this sheet" id="line-progress" max="1" value="0"></progress></div>
-      <div class="next-cue"><span class="input-label" id="cue-label">Next key</span><div id="next-key" aria-labelledby="cue-label"></div></div>
-      <p id="desk-feedback" class="desk-feedback"></p>
-      <label id="tempo" class="field-tempo" hidden><input type="checkbox" id="relaxed-pace"> Relaxed carriage pace</label>
-      <p id="field-cycle" class="field-cycle" hidden></p>
-      <p id="save-status" class="save-status">Your place is saved in this browser.</p>
-    </aside>
+<header class="desk-mast">
+  <div class="desk-identity">
+    <a class="brand" href="../support.html" aria-label="Dead Script game homepage"><span class="brand-icon" aria-hidden="true"><i></i></span>Dead Script</a>
+    <h1>The Scribe’s Desk <span>Touch typing lessons</span></h1>
   </div>
-  <div class="desk-tail">
-    <span>English QWERTY <i aria-hidden="true">/</i> 8 files <i aria-hidden="true">/</i> 33 practice sheets</span>
-    <a href="../support.html#guide">Mac player guide <span aria-hidden="true">↗</span></a>
+  <nav class="desk-tools" aria-label="Desk controls and site navigation">
+    <a class="tool lessons-tool" href="#lessons" id="open-index" aria-label="Lesson index, 33 typing lessons"><i class="tool-icon index-icon" aria-hidden="true"></i><span>Lessons</span></a>
+    <button type="button" class="tool sound-tool" id="sound-toggle" aria-pressed="true" aria-label="Typewriter sound" title="Typewriter sound" disabled><i class="tool-icon sound-icon" aria-hidden="true">♪</i><span class="tool-text" id="sound-label">Sound on</span></button>
+    <button type="button" class="tool" id="fullscreen-toggle" aria-pressed="false" aria-label="Full screen" title="Full screen" hidden><i class="tool-icon expand-icon" aria-hidden="true"></i><span class="tool-text" id="fullscreen-label">Full screen</span></button>
+    <details class="explore-menu" id="explore-menu">
+      <summary id="explore-toggle" class="tool" aria-label="Explore Dead Script" title="Explore Dead Script"><i class="tool-icon menu-icon" aria-hidden="true"></i><span class="tool-text">Explore</span></summary>
+      <div class="explore-links">
+        <a href="#typing-course">Touch typing course</a>
+        <a href="#discover-game">Try Dead Script</a>
+        <a href="../support.html">The Mac game</a>
+        <a href="../art/">Art archive</a>
+        <a href="../journal.html">Development journal</a>
+        <a href="../support.html#support">Player support</a>
+        <a href="../privacy.html">Privacy</a>
+      </div>
+    </details>
+  </nav>
+</header>
+<main class="desk-room" id="main">
+  <noscript><div class="script-note">Enable JavaScript to play the typing lessons, or <a href="../support.html#guide">read the player guide</a>.</div></noscript>
+  <section class="instrument" aria-label="Elias Thorne’s playable typewriter">
+    <div id="stage" class="machine-stage" aria-hidden="true"></div>
+    <div class="desk-console">
+      <progress aria-label="Progress through this sheet" id="line-progress" max="1" value="0"></progress>
+      <button type="button" class="sheet-tab" id="open-notes" aria-label="Read current sheet notes" aria-haspopup="dialog" title="Read current sheet notes">
+        <span class="console-label" id="file-name">The first sitting</span>
+        <span class="sheet-title" id="sheet-title">A thumb’s width</span>
+        <span class="sheet-position"><span id="sheet-line">Line 1 of 2</span><span class="position-divider"> / </span><span id="sheet-percent">0%</span></span>
+      </button>
+      <div class="prompt-area">
+        <label class="input-well" for="desk-input">
+          <span class="console-label" id="line-label">Copy the faded line</span>
+          <span id="readout" class="readout" aria-hidden="true"></span>
+          <textarea rows="1" id="desk-input" aria-label="Type the current line" aria-describedby="input-description" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="text" enterkeyhint="done" disabled></textarea>
+        </label>
+        <p id="desk-feedback" class="desk-feedback"></p>
+      </div>
+      <div class="next-cue"><span class="console-label" id="cue-label">Next key</span><div id="next-key" aria-labelledby="cue-label"></div><p id="field-cycle" class="field-cycle" hidden></p></div>
+      <button type="button" class="desk-action primary-play" id="play-toggle" disabled>Start typing</button>
+    </div>
+    <p id="input-description" class="sr-only"></p>
+    <p id="announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+    <p id="screen-status" class="screen-status" role="status"></p>
+  </section>
+  <div class="desk-editorial">
+<section class="course-guide" id="typing-course" aria-labelledby="course-title">
+  <div class="course-inner">
+    <div class="course-intro">
+      <h2 id="course-title">Free online touch typing lessons</h2>
+      <p>A property slip has turned up under Elias Thorne’s door. Over 33 lessons, you’ll use his typewriter to compare the clerk’s carbon copy with marks from your own keys.</p>
+    </div>
+    <div class="course-layout">
+      <aside class="course-primer" aria-labelledby="home-position">
+        <h3 id="home-position">Find your home position</h3>
+        <p>On an English QWERTY keyboard, feel for the raised marks on <kbd>F</kbd> and <kbd>J</kbd> with your index fingers. Let your other fingers settle on A, S, D and K, L, semicolon. Either thumb can reach Space.</p>
+        <p>Look at the faint line on the paper. The lit finger shows which one to move. After each reach, let it return to the home row. Take the first lines slowly enough to keep your eyes on the copy.</p>
+        <a href="#main" data-practice-file="0">Practice the home keys</a>
+      </aside>
+      <ul class="course-sheets" aria-label="Eight touch-typing topics">
+        <li><h3><a href="#main" data-practice-file="0">F, J and Space</a></h3><p>Start with two keys and a thumb. Compare pairs of impressions and leave one clean space between them.</p></li>
+        <li><h3><a href="#main" data-practice-file="1">Home row</a></h3><p>Add one finger pair at a time. From A through semicolon, the clerk’s list takes shape under your resting fingers.</p></li>
+        <li><h3><a href="#main" data-practice-file="2">Top row</a></h3><p>Reach up for letters such as E, R and U. Return to F and J as Elias compares the edges of two slips.</p></li>
+        <li><h3><a href="#main" data-practice-file="3">Bottom row</a></h3><p>Reach down for V, M and the other lower keys. Cross between rows to copy the inventory from a waxed envelope.</p></li>
+        <li><h3><a href="#main" data-practice-file="4">Word spacing and double letters</a></h3><p>Give each repeated letter its own tap. Copy the packing note with a single space between words.</p></li>
+        <li><h3><a href="#main" data-practice-file="5">Shift, punctuation and corrections</a></h3><p>Hold Shift with the hand opposite the letter. When a stray lowercase e appears in the proof, lift it with Delete or Backspace and type a capital E.</p></li>
+        <li><h3><a href="#main" data-practice-file="6">The number row</a></h3><p>Reach up for the figures in a lending register. Read mixed entries of letters and numbers, then return each finger home.</p></li>
+        <li><h3><a href="#main" data-practice-file="7">Typing moving words</a></h3><p>Two paper silhouettes hang from the carriage. Pick a target by its first letter, finish its word, then turn to the other.</p></li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="course-discover" id="discover-game" aria-labelledby="discover-title">
+  <div class="course-inner discover-layout">
+    <a class="discover-still" href="../support.html#footage" aria-label="Watch Dead Script gameplay on Mac">
+      <img src="../media/trailer.webp" alt="The Heavy-Handed Critic raises his red shears in the printworks. The Mac game prompts Elias to parry by typing STET." width="1152" height="720" loading="lazy">
+      <span>Watch Mac gameplay</span>
+    </a>
+    <div class="discover-copy">
+      <p class="eyebrow">Beyond the typing desk</p>
+      <h2 id="discover-title">Dead Script</h2>
+      <p>In the office, a typed word is evidence. In the Filing Aisle, it fires Elias’s ink revolver. Out at the Red Fissure, every word you finish lays another plank across the gap.</p>
+      <p><a href="../support.html">Explore the Mac game</a> to follow the Golden Ribbon through five districts of Oakhaven.</p>
+      <div class="discover-actions">
+        <a class="drill-link" href="#main" data-practice-file="7" data-practice-sheet="2">Try the moving-target drill</a>
+        <a class="edition-link" href="https://apps.apple.com/app/id6775353218">View the iPhone &amp; iPad game</a>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="course-footer">
+  <div class="course-inner">
+    <a href="#main">Return to the typewriter</a>
+    <nav aria-label="More from Dead Script"><a href="../art/">Art archive</a><a href="../journal.html">Development journal</a><a href="../support.html#support">Player support</a><a href="../../sitemap.xml">Sitemap</a></nav>
+  </div>
+</footer>
   </div>
 </main>
+<dialog id="sheet-notes" class="receipt-dialog" aria-labelledby="notes-heading">
+  <div class="dialog-inner">
+    <header class="dialog-head"><div><p class="eyebrow">Sheet notes</p><h2 id="notes-heading">The first sitting</h2></div><button type="button" class="close-desk" data-close aria-label="Close sheet notes">×</button></header>
+    <p id="sheet-brief" class="result-clue"></p>
+    <p id="sheet-help" class="notes-help"></p>
+    <label id="tempo" class="field-tempo" hidden><input type="checkbox" id="relaxed-pace"> Relaxed carriage pace</label>
+    <p id="save-status" class="save-status">Your place is saved in this browser.</p>
+    <a class="notes-link" href="../support.html#guide">Mac player guide</a>
+  </div>
+</dialog>
 <dialog id="lessons" class="book-dialog" aria-labelledby="index-title">
   <div class="dialog-inner">
     <header class="dialog-head"><div><p class="eyebrow">Office files</p><h2 id="index-title">Lesson index</h2></div><button type="button" class="close-desk" data-close aria-label="Close lesson index">×</button></header>
@@ -79,6 +167,12 @@
   <div class="dialog-inner"><header class="dialog-head"><p class="eyebrow" id="result-kicker">Filed in the casebook</p><button type="button" class="close-desk" data-close aria-label="Close sheet result">×</button></header>
     <h2 id="result-title"></h2><p class="result-clue" id="result-clue"></p><p class="result-score" id="result-score"></p>
     <div class="result-actions"><button class="desk-action" type="button" id="next-sheet"></button><button type="button" class="desk-secondary" id="repeat-sheet">Repeat sheet</button></div>
+    <div class="result-game" id="result-game" hidden>
+      <p>The archive is the next stop in Elias’s story. In Dead Script, each letter you type fires the ink revolver.</p>
+      <a href="#main" data-practice-file="7" data-practice-sheet="2">Try the moving-target drill</a>
+      <a href="../support.html#footage">Watch Mac gameplay</a>
+      <a href="https://apps.apple.com/app/id6775353218">View the iPhone &amp; iPad game</a>
+    </div>
   </div>
 </dialog>
 </body>
