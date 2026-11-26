@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Dead Script: Final Revision — The game &amp; player support for Mac</title>
-  <meta name="description" content="Step into Elias Thorne’s office. Explore the five chapters of Dead Script, watch real Mac gameplay, browse the artwork, and find keyboard and save help.">
+  <meta name="description" content="Play 33 touch-typing lessons at Elias Thorne’s typewriter in your browser. Explore the five chapters of Dead Script, watch Mac gameplay, and find player support.">
   <meta name="theme-color" content="#161513"><meta property="og:type" content="website"><meta property="og:title" content="Dead Script: Final Revision"><meta property="og:description" content="Words are like bullets. A first-person typing horror game for Mac."><meta property="og:image" content="https://pond1982.github.io/iosdeadscriptweb/mac/media/elias-office.webp">
   <link rel="canonical" href="https://pond1982.github.io/iosdeadscriptweb/mac/support.html"><link rel="icon" href="media/mark.webp"><link rel="preload" href="fonts/SpecialElite-Regular.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="site.css"><script defer src="site.js"></script>
 </head>
@@ -12,7 +12,7 @@
 <header class="mast"><div class="wrap mast-inner">
   <a class="brand" href="#top"><span class="brand-icon" aria-hidden="true"><i></i></span>Dead Script</a>
   <nav class="main-nav" aria-label="Main navigation"><a href="#top" aria-current="page">The game</a><a href="art/">Art archive</a><a href="journal.html">Journal</a><a href="#support">Support</a></nav>
-  <a class="mast-guide" href="#guide">Player guide <span aria-hidden="true">↗</span></a>
+  <a class="mast-guide" href="desk/">Typing desk</a>
 </div></header>
 <main id="main">
   <section class="hero" aria-labelledby="game-title">
@@ -22,13 +22,36 @@
       <h1 id="game-title"><span>DEAD</span><span>SCRIPT</span></h1>
       <p class="hero-subtitle">The Final Revision of Oakhaven</p>
       <p class="hero-copy">An earlier draft of you is dying on the archive steps. He has your face. He has the Golden Ribbon.</p>
-      <div class="hero-actions"><a class="button button-red" href="#footage" data-watch><span class="play-icon" aria-hidden="true"></span>Watch gameplay</a><a class="button button-glass" href="#guide">Player guide <span class="arrow" aria-hidden="true">↘</span></a></div>
+      <div class="hero-actions">
+        <a class="button button-red" href="desk/">Play the typing desk</a>
+        <a class="button button-glass" href="#footage" data-watch><span class="play-icon" aria-hidden="true"></span>Watch gameplay</a>
+      </div>
     </div>
     <div class="hero-caption"><span aria-hidden="true"></span>Elias Thorne’s office</div>
   </section>
   <div class="facts"><div class="wrap facts-inner">
     <span><i class="device-icon" aria-hidden="true"></i>Made for macOS</span><span><b>05</b> story chapters</span><span><b>33</b> typing lessons</span><span><i class="offline-icon" aria-hidden="true">◇</i>Single-player · Offline</span>
   </div></div>
+
+  <section class="desk-feature" aria-labelledby="desk-feature-title" id="typing-desk">
+    <div class="desk-feature-inner wrap">
+      <div class="desk-feature-copy">
+        <p class="eyebrow">Playable in your browser</p>
+        <h2 id="desk-feature-title">The Scribe’s Desk</h2>
+        <p>A property slip has been pushed under Elias’s door. Take a seat at his typewriter and help him match the marks on the clerk’s carbon copy.</p>
+        <p>Set your fingers on <kbd>F</kbd> and <kbd>J</kbd>. The gloves show which finger to move. Each keystroke inks a faint letter on the page.</p>
+        <div class="desk-feature-actions">
+          <a class="button button-paper" href="desk/">Sit at the typewriter</a>
+          <a class="desk-index-link" href="desk/#lessons">Browse 33 lessons</a>
+        </div>
+      </div>
+      <a class="desk-feature-art" href="desk/" aria-label="Open the playable typewriter">
+        <img src="media/desk.webp" srcset="media/desk-small.webp 768w, media/desk.webp 1344w"
+             sizes="(max-width: 740px) 100vw, 55vw" width="1344" height="840" loading="lazy"
+             alt="Elias’s gloved hands over the typewriter. The space bar glows beneath his thumbs.">
+      </a>
+    </div>
+  </section>
 
   <section class="world wrap section" aria-labelledby="world-title" id="chapters">
     <div class="section-head"><div><p class="eyebrow">The manuscript</p><h2 id="world-title">Inside Oakhaven</h2></div><div class="chapter-nav" aria-label="Browse chapters"><button type="button" class="nav-arrow" data-scroll="-1" aria-label="Previous chapters" disabled>←</button><button type="button" class="nav-arrow" data-scroll="1" aria-label="Next chapters">→</button></div></div>
@@ -54,10 +77,10 @@
   </div></section>
 
   <section class="guide-band" id="guide" aria-labelledby="guide-heading"><div class="wrap guide-grid">
-    <figure class="desk-plate"><img width="1344" height="840" src="media/desk.webp" srcset="media/desk-small.webp 768w, media/desk.webp 1344w" sizes="(max-width:790px) 100vw, 52vw" loading="lazy" alt="Elias’s gloved hands rest over the illuminated typewriter keys at the Scribe’s Desk."><figcaption>The Scribe’s Desk</figcaption></figure>
+    <figure class="desk-plate"><img width="1550" height="661" src="art/plates/bridge-fissure.webp" loading="lazy" alt="Beyond the last planks of a broken bridge, the far doorway glows red."><figcaption>The Red Fissure · Each word lays another plank.</figcaption></figure>
     <div class="guide-copy"><p class="eyebrow">Player guide</p><h2 id="guide-heading">At the keys</h2><p class="guide-lead">Everything you need to play is on your Mac keyboard.</p>
       <div class="guide-tabs" aria-label="Guide topics"><a href="#typing">Typing</a><a href="#combat">Combat</a><a href="#settings">Settings</a></div>
-      <div class="guide-pane" id="typing"><h3>Start at Elias’s desk</h3><p>Choose <strong>Learn to type</strong> for 33 lessons on an English QWERTY keyboard. Follow the lit finger and copy the faint letters onto the paper.</p><p>In the first-time playtest, two F/J lines feed straight into the clerk’s proof. Press <kbd>Delete</kbd> to lift the stray letter, then copy the note.</p></div>
+      <div class="guide-pane" id="typing"><h3>Start at Elias’s desk</h3><p>Choose <strong>Learn to type</strong> for 33 lessons on an English QWERTY keyboard. Follow the lit finger and copy the faint letters onto the paper.</p><p>In the first-time playtest, two F/J lines feed straight into the clerk’s proof. Press <kbd>Delete</kbd> to lift the stray letter, then copy the note.</p><a class="guide-desk-link" href="desk/">Practice at the browser typing desk</a></div>
       <div class="guide-pane" id="combat"><h3>Fire with a word</h3><p>Choose <strong>Begin story</strong> to follow Elias. Type the word on the Golden Ribbon handoff, then the word above each enemy. The first threat waits for your first correct letter.</p><p>A mistype preserves the letters you have landed. Press <kbd>Esc</kbd> to pause and <kbd>Return</kbd> to resume.</p></div>
       <div class="guide-pane" id="settings"><h3>Set your pace</h3><p>Press <kbd>⌘</kbd> + <kbd>,</kbd> for <strong>Settings</strong>. Relaxed pace doubles the enemy and parry windows. Large Type increases the size of words and captions.</p><p>Reduce Motion and Reduce Flash work independently. Music, effects and Elias’s narration each have their own volume control.</p></div>
     </div></div></section>
@@ -72,12 +95,13 @@
   <section class="support-band" id="support" aria-labelledby="support-heading"><div class="wrap support-grid">
     <div><p class="eyebrow">Mac support</p><h2 id="support-heading">Need a hand?</h2><p>For help, email Pondd with your macOS version and the chapter or lesson where you ran into trouble.</p><a class="contact-link" href="mailto:pond1982a@gmail.com?subject=Dead%20Script%20for%20Mac%20support">Email support <span aria-hidden="true">↗</span></a></div>
     <div class="support-answers">
+      <details><summary>Where do my browser typing lessons save?</summary><p>Return to the <a href="desk/">typing desk</a> in the same browser to pick up your sheet. Your place and best scores stay in this browser, separate from your Mac game save. Clearing this site’s browser data will clear your desk progress.</p></details>
       <details><summary>How do I continue a saved game?</summary><p>Choose <strong>Continue</strong> on the title screen. After quitting, the campaign resumes at its saved passage or chapter. Office lessons keep a separate bookmark.</p></details>
       <details><summary>Where is my playtest report?</summary><p>Choose <strong>Show in Finder</strong> on the results screen to reveal the Markdown file, or <strong>Copy report</strong> to copy its contents. Early exits save a partial report. You choose whether to share it.</p></details>
       <details><summary>Can I change the sound, flashes or typing pace?</summary><p>Yes. Open <strong>Settings</strong> with <kbd>⌘</kbd> + <kbd>,</kbd>. You can adjust narration, music and effects separately, reduce flashes and motion, enlarge the type or choose Relaxed pace.</p></details>
       <details><summary>Does the game need an internet connection?</summary><p>The game plays offline. The artwork, narration and music ship with the app. Progress and playtest records stay on your Mac. <a href="privacy.html">Read the Mac privacy policy.</a></p></details>
     </div></div></section>
 </main>
-<footer class="site-foot"><div class="wrap foot-inner"><div><a class="brand" href="#top"><span class="brand-icon" aria-hidden="true"><i></i></span>Dead Script</a><p>© 2026 Suwitcha Sugthana · Pondd</p></div><nav aria-label="Footer"><a href="art/">Art archive</a><a href="journal.html">Journal</a><a href="#support">Support</a><a href="privacy.html">Privacy</a></nav></div></footer>
+<footer class="site-foot"><div class="wrap foot-inner"><div><a class="brand" href="#top"><span class="brand-icon" aria-hidden="true"><i></i></span>Dead Script</a><p>© 2026 Suwitcha Sugthana · Pondd</p></div><nav aria-label="Footer"><a href="desk/">Typing desk</a><a href="#guide">Player guide</a><a href="art/">Art archive</a><a href="journal.html">Journal</a><a href="#support">Support</a><a href="privacy.html">Privacy</a></nav></div></footer>
 <dialog class="case-dialog" id="case-dialog" aria-labelledby="case-title"><button class="case-close nav-arrow" type="button" aria-label="Close chapter">×</button><img id="case-art" alt=""><div class="case-text"><p class="eyebrow" id="case-index"></p><h2 id="case-title"></h2><p id="case-body"></p><a href="art/" class="text-link">View the art archive <span aria-hidden="true">↗</span></a></div></dialog>
 </body></html>

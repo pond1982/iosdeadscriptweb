@@ -23,3 +23,75 @@
 @media(max-width:480px){.facts-inner{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;padding-block:11px}.facts-inner>span,.facts-inner>span:first-child,.facts-inner>span:last-child{display:inline-flex;align-items:center;border:0;margin:0;padding:0;font-size:11px}.facts-inner .offline-icon{font-size:15px}.facts-inner>span:nth-child(2){order:3}.facts-inner>span:nth-child(3){order:4}.facts-inner>span:last-child{order:2}}
 .journal-ribbon{width:clamp(95px,14vw,210px);height:auto;transform:rotate(-9deg)}
 @media(max-width:900px){.journal-ribbon{display:none}}
+
+/* The desk is playable from the web edition. Its invitation sits beside an actual game capture. */
+.desk-feature {
+  background: #1c1b16;
+  border-bottom: 1px solid #4b4437;
+}
+.desk-feature-inner {
+  display: grid;
+  grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr);
+  align-items: center;
+  gap: clamp(24px, 5.5vw, 88px);
+  padding-block: clamp(34px, 4.7vw, 74px);
+}
+.desk-feature-copy h2 {
+  margin: 16px 0 18px;
+}
+.desk-feature-copy > p:not(.eyebrow) {
+  max-width: 44ch;
+  margin: 0 0 12px;
+  color: #d8d0c1;
+  font-size: clamp(1rem, 1.12vw, 1.12rem);
+}
+.desk-feature kbd {
+  display: inline-block;
+  min-width: 1.48em;
+  color: #f0dcb3;
+  border: 1px solid #81725b;
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  background: #28251f;
+  text-align: center;
+  font: .84em/1.35 var(--mono);
+}
+.desk-feature-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 13px 22px;
+  margin-top: 24px;
+}
+.button-paper {
+  border-color: #cfb68d;
+  background: #deca9f;
+  color: #252018;
+}
+.button-paper:hover { background: #efdab4; }
+.desk-index-link, .guide-desk-link {
+  font-size: .92rem;
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+.desk-index-link { color: #dfcda9; }
+.guide-desk-link { color: #5b3529; }
+.desk-feature-art {
+  display: block;
+  padding: 5px;
+  border: 1px solid #6a5944;
+  background: #25201a;
+  box-shadow: 0 9px 30px #09080644;
+}
+.desk-feature-art img { width: 100%; }
+.desk-feature-art:hover { border-color: var(--gold); }
+@media (max-width: 740px) {
+  .desk-feature-inner { grid-template-columns: 1fr; }
+  .desk-feature-copy > p:not(.eyebrow) { max-width: 56ch; }
+  .desk-feature-art { max-width: 610px; }
+  .desk-feature-actions { margin-top: 20px; }
+}
+@media (max-width: 380px) {
+  .hero-actions { flex-wrap: wrap; gap: 8px; }
+  .hero-actions .button { padding-inline: 10px; letter-spacing: .7px; }
+}

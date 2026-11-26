@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151412">
+  <title>The Scribe’s Desk — Play the Dead Script typing lessons</title>
+  <meta name="description" content="Sit at Elias Thorne’s typewriter. Follow the finger cues through 33 free typing lessons and uncover the story of a misfiled property slip in Oakhaven.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Scribe’s Desk · Dead Script">
+  <meta property="og:description" content="Learn touch typing at Elias Thorne’s typewriter and follow an old property slip through eight office case files.">
+  <meta property="og:image" content="https://pond1982.github.io/iosdeadscriptweb/mac/media/desk.webp">
+  <meta property="og:image:alt" content="A sheet in Elias’s mechanical typewriter above brass keys and his gloved hands.">
+  <link rel="canonical" href="https://pond1982.github.io/iosdeadscriptweb/mac/desk/">
+  <link rel="icon" href="../media/mark.webp">
+  <link rel="preload" href="../fonts/SpecialElite-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../site.css">
+  <link rel="stylesheet" href="desk.css">
+  <link rel="stylesheet" href="machine.css">
+  <script type="module" src="desk.js"></script>
+</head>
+<body class="desk-page" id="top">
+<a class="skip-link" href="#main">Skip to typing desk</a>
+<header class="mast"><div class="wrap mast-inner">
+  <a class="brand" href="../support.html"><span class="brand-icon" aria-hidden="true"><i></i></span>Dead Script</a>
+  <nav class="main-nav" aria-label="Main navigation"><a href="../support.html">The game</a><a href="../art/">Art archive</a><a href="../journal.html">Journal</a><a href="../support.html#support">Support</a></nav>
+  <a class="mast-guide" href="./" aria-current="page">Typing desk <span aria-hidden="true">↘</span></a>
+</div></header>
+<main class="desk-wrap wrap" id="main">
+  <header class="desk-heading">
+    <div><p class="eyebrow">Touch typing in Oakhaven</p><h1>The Scribe’s Desk</h1></div>
+    <a class="index-link" href="#lessons" id="open-index"><span aria-hidden="true">☰</span> Lesson index</a>
+  </header>
+  <noscript><div class="script-note">Enable JavaScript to play the typing lessons. You can also <a href="../support.html#guide">read the Mac player guide</a>.</div></noscript>
+  <div class="desk-layout">
+    <section class="instrument" aria-label="Playable typewriter">
+      <div class="machine-top"><span class="machine-label"><i aria-hidden="true"></i>Elias Thorne’s office</span>
+        <button type="button" id="sound-toggle" aria-pressed="false" aria-label="Typewriter sound" disabled>Sound off</button>
+      </div>
+      <div id="stage" class="machine-stage" aria-hidden="true"></div>
+      <div class="input-bar">
+        <label class="input-well" for="desk-input">
+          <span class="input-label" id="line-label">Copy the faded line</span>
+          <span id="readout" class="readout" aria-hidden="true"></span>
+          <textarea rows="1" id="desk-input" aria-label="Type the current line" aria-describedby="input-description"
+            autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="text" enterkeyhint="done" disabled></textarea>
+        </label>
+        <button type="button" class="desk-action" id="play-toggle" disabled>Start typing <span aria-hidden="true">→</span></button>
+      </div>
+      <p id="input-description" class="sr-only"></p>
+      <p id="announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+    </section>
+    <aside class="file-notes" aria-labelledby="sheet-title">
+      <div class="file-header"><span class="file-rule"></span><span id="file-name">The first sitting</span></div>
+      <h2 id="sheet-title">A thumb’s width</h2>
+      <p id="sheet-brief" class="sheet-brief">Elias finds a property slip under his office door. He feeds a sheet into the machine to compare its marks with his own.</p>
+      <div class="sheet-progress"><div><span id="sheet-line">Line 1 of 2</span><span id="sheet-percent"></span></div><progress aria-label="Progress through this sheet" id="line-progress" max="1" value="0"></progress></div>
+      <div class="next-cue"><span class="input-label" id="cue-label">Next key</span><div id="next-key" aria-labelledby="cue-label"></div></div>
+      <p id="desk-feedback" class="desk-feedback"></p>
+      <label id="tempo" class="field-tempo" hidden><input type="checkbox" id="relaxed-pace"> Relaxed carriage pace</label>
+      <p id="field-cycle" class="field-cycle" hidden></p>
+      <p id="save-status" class="save-status">Your place is saved in this browser.</p>
+    </aside>
+  </div>
+  <div class="desk-tail">
+    <span>English QWERTY <i aria-hidden="true">/</i> 8 files <i aria-hidden="true">/</i> 33 practice sheets</span>
+    <a href="../support.html#guide">Mac player guide <span aria-hidden="true">↗</span></a>
+  </div>
+</main>
+<dialog id="lessons" class="book-dialog" aria-labelledby="index-title">
+  <div class="dialog-inner">
+    <header class="dialog-head"><div><p class="eyebrow">Office files</p><h2 id="index-title">Lesson index</h2></div><button type="button" class="close-desk" data-close aria-label="Close lesson index">×</button></header>
+    <p class="book-intro" id="filed-count"></p>
+    <button type="button" id="open-first" class="sample-entry">The first sitting <span>F/J and the clerk’s proof ↗</span></button>
+    <div class="course-index" id="course-index"></div>
+  </div>
+</dialog>
+<dialog id="receipt" class="receipt-dialog" aria-labelledby="result-title">
+  <div class="dialog-inner"><header class="dialog-head"><p class="eyebrow" id="result-kicker">Filed in the casebook</p><button type="button" class="close-desk" data-close aria-label="Close sheet result">×</button></header>
+    <h2 id="result-title"></h2><p class="result-clue" id="result-clue"></p><p class="result-score" id="result-score"></p>
+    <div class="result-actions"><button class="desk-action" type="button" id="next-sheet"></button><button type="button" class="desk-secondary" id="repeat-sheet">Repeat sheet</button></div>
+  </div>
+</dialog>
+</body>
+</html>
